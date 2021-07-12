@@ -8,7 +8,7 @@ distances = [[]]  # Distance matrix
 problem_size = 0  # Problem dimension read
 energy_consumption = 0.0
 
-DEPOT = 0  # Depot id (usually 0)
+DEPOT = 0  # Depot index (usually 0)
 NUM_OF_CUSTOMERS = 0  # Number of customers (excluding depot)
 ACTUAL_PROBLEM_SIZE = 0  # Total number of customers, charging stations and depot
 OPTIMUM = 0  # Problem's optimal solution

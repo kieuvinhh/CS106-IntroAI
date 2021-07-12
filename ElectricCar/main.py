@@ -1,7 +1,8 @@
 import random
-import EVRP
-import heuristic
-import stats
+import ElectricCar.EVRP as EVRP
+import ElectricCar.heuristic as heuristic
+import ElectricCar.stats as stats
+from ElectricCar.visualize import draw_graph
 
 
 # initialiazes a run for your heuristic
@@ -35,7 +36,7 @@ def termination_condition():
 '''
 if __name__ == "__main__":
     # Step 1
-    EVRP.problem_instance = "E:\Vinh\CS106-AI\evrp-benchmark-set\E-n22-k4.evrp"  # pass the .evrp filename as an argument
+    EVRP.problem_instance = "F:\Phan mem\Hoc Tap\AI\DoAn\CS106-IntroAI\evrp-benchmark-set\E-n22-k4.evrp"  # pass the .evrp filename as an argument
     EVRP.read_problem(EVRP.problem_instance)  # Read EVRP from file from EVRP.py
 
     # Step 2
@@ -64,5 +65,9 @@ if __name__ == "__main__":
         # Step 5
         end_run(run)  # store the best solution quality for each run
 
+        # Draw graph
+        draw_graph(EVRP.get_current_best_route(), EVRP.node_list, EVRP.cust_demand, EVRP.charging_station, EVRP.ACTUAL_PROBLEM_SIZE)
+
     # Step 6
     stats.close_stats()  # close text files to calculate the mean result from the 20 runs stats.py
+

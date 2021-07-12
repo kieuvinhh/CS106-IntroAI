@@ -1,7 +1,7 @@
 import math
-import EVRP
+import ElectricCar.EVRP as EVRP
 
-MAX_TRIALS = 20
+MAX_TRIALS = 2
 log_performance = None  # Used to output offline performance and population diversity
 perf_filename = ""  # output files
 perf_of_trials = []
