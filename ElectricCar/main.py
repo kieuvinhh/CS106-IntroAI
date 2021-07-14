@@ -4,6 +4,9 @@ import heuristic as heuristic
 import stats as stats
 from visualize import draw_graph
 import RL
+import MST
+import numpy as np
+
 # initialiazes a run for your heuristic
 def start_run(r: int):
     random.seed(r)  # Random seed
@@ -35,13 +38,22 @@ def termination_condition():
 '''
 if __name__ == "__main__":
     # Step 1
-<<<<<<< HEAD
     EVRP.problem_instance = "E:\Vinh\CS106-AI\CS106-IntroAI\evrp-benchmark-set\E-n22-k4.evrp"  # pass the .evrp filename as an argument
-=======
-    EVRP.problem_instance = "F:\Phan mem\Hoc Tap\AI\DoAn\CS106-IntroAI\evrp-benchmark-set\E-n51-k5.evrp"  # pass the .evrp filename as an argument
->>>>>>> 7fcc68fe6322e69226ab658cb94fad7158fa358d
     EVRP.read_problem(EVRP.problem_instance)  # Read EVRP from file from EVRP.py
-    RL.CWS()
+    size_of_node = len(EVRP.node_list)
+    Mst_algo = MST.Graph(len(EVRP.node_list))
+    d = np.zeros((size_of_node, size_of_node))
+    for i in range(len(EVRP.node_list)):
+        for j in range(len(EVRP.node_list)):
+            if i != j:
+                d[i][j] = EVRP.get_distance(EVRP.node_list[i][0], EVRP.node_list[j][0])
+
+    for i in range(len(EVRP.node_list)):
+        for j in range(len(EVRP.node_list)):
+            if i != j:
+                Mst_algo.addEdge(EVRP.node_list[i][0], EVRP.node_list[j][0], d[i][j])
+
+    Mst_algo.KruskalMST()
     """
 
     # Step 2

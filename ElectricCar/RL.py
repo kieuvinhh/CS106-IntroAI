@@ -14,7 +14,7 @@ def CWS():
 
     for i in range(a):
         for j in range(a):
-            if i!= j:
+            if i != j:
                 s.append([i, j, c[0][i] + c[j][0] - c[i][j]])
 
     for i in range(len(s)):
