@@ -3,13 +3,12 @@ import matplotlib.pyplot as plt
 
 def draw_graph(solution_route, node_list, cust_demand, charging_station, ACTUAL_PROBLEM_SIZE: int):
 	'''
-	solution_route: có dạng [id-1, ...] là route của solution
-	node_list: có dạng [[id:int, x:double, y:double], ...] là vị trí các node
-	cust_demand: có dạng [demand, ...] là weight của customer
-	charging_station: [bool, ...] là các recharge station
-	ACTUAL_PROBLEM_SIZE: int là kích thước problem
+	solution_route: have the following format [id-1, ...], it is the route of the solution
+	node_list: have the following format [[id:int, x:double, y:double], ...], it is position of the node
+	cust_demand: have the following format [demand, ...], it is the demand of the customer
+	charging_station: [bool, ...] is the recharging station
+	ACTUAL_PROBLEM_SIZE: int is the problem size
 	'''
-
 
 	depot = plt.Circle((node_list[0][1], node_list[0][2]), 2, color='red')
 	stations = []

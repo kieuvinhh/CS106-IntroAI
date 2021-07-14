@@ -54,6 +54,7 @@ def local_search(solution_route: list):
 		else:
 			new_route = AFS_reallocation(current_route, len(current_route))
 
+
 		if EVRP.fitness_evaluation(new_route, len(new_route)) < EVRP.fitness_evaluation(current_route, len(current_route)):
 			current_route = new_route
 			i = 0
@@ -421,11 +422,16 @@ def cost_or_opt(id1: int, id2_first: int, id3_first: int, id4: int, id5: int, id
 
 
 def AFS_reallocation(solution_route: list, steps: int):
+	modified = solution_route[:]
+
+	# Remove duplicate node
+	modified = remove_duplicate_node(modified)
+
 	# Delete all the station in the route
 	index = 0
-	while index < len(solution_route):
-		if EVRP.is_charging_station(solution_route[index]) and solution_route[index] != EVRP.DEPOT:
-			del solution_route[index]
+	while index < len(modified):
+		if EVRP.is_charging_station(modified[index]) and modified[index] != EVRP.DEPOT:
+			del modified[index]
 			continue
 		index += 1
 
@@ -435,9 +441,9 @@ def AFS_reallocation(solution_route: list, steps: int):
 	add_battery_flag = False
 	index = 1
 
-	while index < len(solution_route):
-		_from = solution_route[index - 1]
-		_to = solution_route[index]
+	while index < len(modified):
+		_from = modified[index - 1]
+		_to = modified[index]
 
 		# If current is depot:
 		if _from == EVRP.DEPOT:
@@ -450,17 +456,17 @@ def AFS_reallocation(solution_route: list, steps: int):
 		# Check nearest station in next node
 		nearest_station_next = get_nearest_station(_to)
 		temp_battery_next = temp_battery - EVRP.get_energy_consumption(_from, _to) - EVRP.get_energy_consumption(_to,
-																												 nearest_station_next)
+																												nearest_station_next)
 
 		# If current node can't reach next station, then fallback and find next addable station
 		if temp_battery_station < 0:
 			add_battery_flag = True
 			index -= 1
-			temp_battery = get_current_battery_consumption(solution_route, index - 1)
+			temp_battery = get_current_battery_consumption(modified, index - 1)
 			continue
 		# If flag to add station is on then add the nearest station to the solution
 		elif add_battery_flag:
-			solution_route.insert(index, nearest_station)
+			modified.insert(index, nearest_station)
 			temp_battery = EVRP.BATTERY_CAPACITY
 			index += 1
 			add_battery_flag = False
@@ -468,7 +474,7 @@ def AFS_reallocation(solution_route: list, steps: int):
 		# If current node is a station and next node can't reach the station then add the station of the
 		# next node to break infinity loop
 		elif _from == nearest_station and temp_battery_next < 0:
-			solution_route.insert(index, nearest_station_next)
+			modified.insert(index, nearest_station_next)
 			temp_battery = EVRP.BATTERY_CAPACITY
 			index += 1
 			add_battery_flag = False
@@ -478,10 +484,10 @@ def AFS_reallocation(solution_route: list, steps: int):
 
 		# If vehicle can't reach the next customer then add nearest station
 		if temp_battery < 0:
-			solution_route.insert(index, nearest_station)
+			modified.insert(index, nearest_station)
 			temp_battery = EVRP.BATTERY_CAPACITY
 
 		index += 1
 
-	return solution_route
+	return modified
 

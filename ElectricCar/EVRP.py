@@ -339,9 +339,11 @@ def check_solution(t, size: int):
     global BATTERY_CAPACITY
     global MAX_CAPACITY
     global DEPOT
+    global NUM_OF_CUSTOMERS
 
     energy_temp = BATTERY_CAPACITY
     capacity_temp = MAX_CAPACITY
+    number_of_customers = 0
     distance_temp = 0.0
 
     for i in range(size - 1):
@@ -350,6 +352,9 @@ def check_solution(t, size: int):
         capacity_temp -= get_customer_demand(_to)
         energy_temp -= get_energy_consumption(_from, _to)
         distance_temp += get_distance(_from, _to)
+
+        if get_customer_demand(_to) > 0:
+            number_of_customers += 1
 
         if capacity_temp < 0.0:
             print("error: capacity below 0 at customer {}".format(_to))
@@ -366,3 +371,5 @@ def check_solution(t, size: int):
 
     if distance_temp != fitness_evaluation(t, size):
         print("error: check fitness evaluation")
+    if number_of_customers != NUM_OF_CUSTOMERS:
+        print("error: not visit all the customer")

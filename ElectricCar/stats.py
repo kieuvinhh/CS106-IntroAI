@@ -7,9 +7,6 @@ perf_filename = ""  # output files
 perf_of_trials = []
 
 
-# EVRP.problem_instance
-
-
 def open_stats():
     global perf_of_trials
     global perf_filename
