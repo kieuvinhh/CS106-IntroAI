@@ -1,10 +1,9 @@
 import random
-import ElectricCar.EVRP as EVRP
-import ElectricCar.heuristic as heuristic
-import ElectricCar.stats as stats
-from ElectricCar.visualize import draw_graph
-
-
+import EVRP as EVRP
+import heuristic as heuristic
+import stats as stats
+from visualize import draw_graph
+import RL
 # initialiazes a run for your heuristic
 def start_run(r: int):
     random.seed(r)  # Random seed
@@ -36,8 +35,10 @@ def termination_condition():
 '''
 if __name__ == "__main__":
     # Step 1
-    EVRP.problem_instance = "F:\Phan mem\Hoc Tap\AI\DoAn\CS106-IntroAI\evrp-benchmark-set\E-n22-k4.evrp"  # pass the .evrp filename as an argument
+    EVRP.problem_instance = "E:\Vinh\CS106-AI\CS106-IntroAI\evrp-benchmark-set\E-n22-k4.evrp"  # pass the .evrp filename as an argument
     EVRP.read_problem(EVRP.problem_instance)  # Read EVRP from file from EVRP.py
+    RL.CWS()
+    """
 
     # Step 2
     stats.open_stats()  # open text files to store the best values from the 20 runs stats.py
@@ -71,3 +72,4 @@ if __name__ == "__main__":
     # Step 6
     stats.close_stats()  # close text files to calculate the mean result from the 20 runs stats.py
 
+"""
