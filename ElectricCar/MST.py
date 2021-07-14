@@ -1,4 +1,3 @@
-
 class Graph:
 
     def __init__(self, vertices):
@@ -63,7 +62,7 @@ class Graph:
         for node in range(self.V):
             parent.append(node)
             rank.append(0)
-
+        route = [0]
         # Number of edges to be taken is equal to V-1
         while e < self.V - 1:
 
@@ -83,13 +82,20 @@ class Graph:
                 result.append([u, v, w])
                 self.union(parent, rank, x, y)
         # Else discard the edge
-
-        minimumCost = 0
+        #print(result)
+        for x, y, w in result:
+            if x not in route:
+                route.append(x)
+            if y not in route:
+                route.append(y)
+        route.append(0)
+        print(route)
+        """minimumCost = 0
         print("Edges in the constructed MST")
         for u, v, weight in result:
             minimumCost += weight
             print("%d -- %d == %d" % (u, v, weight))
-        print("Minimum Spanning Tree", minimumCost)
+        print("Minimum Spanning Tree", minimumCost)"""
 
 
 """# Driver code

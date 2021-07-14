@@ -1,4 +1,4 @@
-import ElectricCar.EVRP as EVRP
+import EVRP as EVRP
 import random
 
 '''
