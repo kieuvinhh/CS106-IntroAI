@@ -435,59 +435,7 @@ def AFS_reallocation(solution_route: list, steps: int):
 			continue
 		index += 1
 
-	# Reallocate all the charging station to the route
-	max_battery = EVRP.BATTERY_CAPACITY
-	temp_battery = max_battery
-	add_battery_flag = False
-	index = 1
-
-	while index < len(modified):
-		_from = modified[index - 1]
-		_to = modified[index]
-
-		# If current is depot:
-		if _from == EVRP.DEPOT:
-			temp_battery = EVRP.BATTERY_CAPACITY
-
-		# Check if nearest station can be reach from current and prevent infinity loop
-		# Check nearest station in current node
-		nearest_station = get_nearest_station(_from)
-		temp_battery_station = temp_battery - EVRP.get_energy_consumption(_from, nearest_station)
-		# Check nearest station in next node
-		nearest_station_next = get_nearest_station(_to)
-		temp_battery_next = temp_battery - EVRP.get_energy_consumption(_from, _to) - EVRP.get_energy_consumption(_to,
-																												nearest_station_next)
-
-		# If current node can't reach next station, then fallback and find next addable station
-		if temp_battery_station < 0:
-			add_battery_flag = True
-			index -= 1
-			temp_battery = get_current_battery_consumption(modified, index - 1)
-			continue
-		# If flag to add station is on then add the nearest station to the solution
-		elif add_battery_flag:
-			modified.insert(index, nearest_station)
-			temp_battery = EVRP.BATTERY_CAPACITY
-			index += 1
-			add_battery_flag = False
-			continue
-		# If current node is a station and next node can't reach the station then add the station of the
-		# next node to break infinity loop
-		elif _from == nearest_station and temp_battery_next < 0:
-			modified.insert(index, nearest_station_next)
-			temp_battery = EVRP.BATTERY_CAPACITY
-			index += 1
-			add_battery_flag = False
-			continue
-
-		temp_battery -= EVRP.get_energy_consumption(_from, _to)
-
-		# If vehicle can't reach the next customer then add nearest station
-		if temp_battery < 0:
-			modified.insert(index, nearest_station)
-			temp_battery = EVRP.BATTERY_CAPACITY
-
-		index += 1
+	modified = seperate_sequential_fixing(modified)
 
 	return modified
 
