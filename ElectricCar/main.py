@@ -1,4 +1,5 @@
 import random
+<<<<<<< HEAD
 import EVRP as EVRP
 import heuristic as heuristic
 import stats as stats
@@ -8,6 +9,15 @@ import MST
 import numpy as np
 
 # initialiazes a run for your heuristic
+=======
+import ElectricCar.EVRP as EVRP
+import ElectricCar.heuristic as heuristic
+import ElectricCar.stats as stats
+from ElectricCar.visualize import draw_graph
+
+
+# initialize a run for your heuristic
+>>>>>>> 98bdec4a98c98000d8eb65eda31f1825aed00a48
 def start_run(r: int):
     random.seed(r)  # Random seed
     EVRP.init_evals()
@@ -22,7 +32,7 @@ def end_run(r: int):
                                                                                      EVRP.get_evals()))
 
 
-# sets the termination conidition for your heuristic
+# sets the termination condition for your heuristic
 def termination_condition():
     flag = False
 
@@ -38,6 +48,7 @@ def termination_condition():
 '''
 if __name__ == "__main__":
     # Step 1
+<<<<<<< HEAD
     EVRP.problem_instance = "E:\Vinh\CS106-AI\CS106-IntroAI\evrp-benchmark-set\E-n22-k4.evrp"  # pass the .evrp filename as an argument
     EVRP.read_problem(EVRP.problem_instance)  # Read EVRP from file from EVRP.py
     size_of_node = len(EVRP.node_list)
@@ -55,6 +66,10 @@ if __name__ == "__main__":
 
     Mst_algo.KruskalMST()
     """
+=======
+    EVRP.problem_instance = "F:\Phan mem\Hoc Tap\AI\DoAn\CS106-IntroAI\evrp-benchmark-set\E-n51-k5.evrp"  # pass the .evrp filename as an argument
+    EVRP.read_problem(EVRP.problem_instance)  # Read EVRP from file from EVRP.py
+>>>>>>> 98bdec4a98c98000d8eb65eda31f1825aed00a48
 
     # Step 2
     stats.open_stats()  # open text files to store the best values from the 20 runs stats.py
@@ -80,4 +95,7 @@ if __name__ == "__main__":
     # Step 6
     stats.close_stats()  # close text files to calculate the mean result from the 20 runs stats.py
 
+<<<<<<< HEAD
 """
+=======
+>>>>>>> 98bdec4a98c98000d8eb65eda31f1825aed00a48

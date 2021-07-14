@@ -1,4 +1,4 @@
-import EVRP
+import ElectricCar.EVRP as EVRP
 import numpy as np
 
 

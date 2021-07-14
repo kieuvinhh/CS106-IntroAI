@@ -122,7 +122,7 @@ def read_problem(filename: str):
                 continue
             elif word[0] == "DEMAND_SECTION":
                 keywords = "DEMAND_SECTION"
-                cust_demand = [-1] * ACTUAL_PROBLEM_SIZE
+                cust_demand = [0] * ACTUAL_PROBLEM_SIZE
                 charging_station = [False] * ACTUAL_PROBLEM_SIZE
                 continue
             elif word[0] == "STATIONS_COORD_SECTION":
