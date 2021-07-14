@@ -1,13 +1,10 @@
 import math
 import EVRP as EVRP
 
-MAX_TRIALS = 2
+MAX_TRIALS = 1
 log_performance = None  # Used to output offline performance and population diversity
 perf_filename = ""  # output files
 perf_of_trials = []
-
-
-# EVRP.problem_instance
 
 
 def open_stats():
@@ -19,8 +16,11 @@ def open_stats():
     # Initialize
     perf_of_trials = [0.0] * MAX_TRIALS
 
+    # get problem name
+    name = (EVRP.problem_instance.split('\\')[-1]).split('.')[0]
+
     # initialize and open output files
-    perf_filename = "stats.txt"
+    perf_filename = "Statistic/{}.txt".format(name)
 
     # for performance
     try:

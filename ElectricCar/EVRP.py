@@ -1,6 +1,6 @@
 import math
 
-problem_instance = ""  # Name of the problem
+problem_instance = ""  # Path to the problem
 node_list = []  # List of nodes with id and x and y coordinates, a node include [id:int, x:double, y:double]
 cust_demand = []  # List with id and customer demands
 charging_station = []
@@ -9,6 +9,8 @@ problem_size = 0  # Problem dimension read
 energy_consumption = 0.0
 
 DEPOT = 0  # Depot index (usually 0)
+CUSTOMER_START_INDEX = 0
+STATION_START_INDEX = 0
 NUM_OF_CUSTOMERS = 0  # Number of customers (excluding depot)
 ACTUAL_PROBLEM_SIZE = 0  # Total number of customers, charging stations and depot
 OPTIMUM = 0  # Problem's optimal solution
@@ -88,6 +90,8 @@ def read_problem(filename: str):
     global cust_demand
     global charging_station
     global DEPOT
+    global CUSTOMER_START_INDEX
+    global STATION_START_INDEX
 
     keywords = ""
 
@@ -140,9 +144,13 @@ def read_problem(filename: str):
             elif keywords == "DEMAND_SECTION":
                 if problem_size != 0:
                     cust_demand[int(word[0]) - 1] = int(word[1])
+                    if CUSTOMER_START_INDEX == 0:
+                        CUSTOMER_START_INDEX = int(word[0]) - 1
             elif keywords == "STATIONS_COORD_SECTION":
                 if problem_size != 0:
                     charging_station[int(word[0]) - 1] = True
+                    if STATION_START_INDEX == 0:
+                        STATION_START_INDEX = int(word[0]) - 1
             elif keywords == "DEPOT_SECTION":
                 DEPOT = int(word[0]) - 1
                 charging_station[int(word[0]) - 1] = True
@@ -331,9 +339,11 @@ def check_solution(t, size: int):
     global BATTERY_CAPACITY
     global MAX_CAPACITY
     global DEPOT
+    global NUM_OF_CUSTOMERS
 
     energy_temp = BATTERY_CAPACITY
     capacity_temp = MAX_CAPACITY
+    number_of_customers = 0
     distance_temp = 0.0
 
     for i in range(size - 1):
@@ -342,6 +352,9 @@ def check_solution(t, size: int):
         capacity_temp -= get_customer_demand(_to)
         energy_temp -= get_energy_consumption(_from, _to)
         distance_temp += get_distance(_from, _to)
+
+        if get_customer_demand(_to) > 0:
+            number_of_customers += 1
 
         if capacity_temp < 0.0:
             print("error: capacity below 0 at customer {}".format(_to))
@@ -358,3 +371,5 @@ def check_solution(t, size: int):
 
     if distance_temp != fitness_evaluation(t, size):
         print("error: check fitness evaluation")
+    if number_of_customers != NUM_OF_CUSTOMERS:
+        print("error: not visit all the customer")
