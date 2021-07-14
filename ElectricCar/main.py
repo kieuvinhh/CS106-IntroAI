@@ -7,7 +7,7 @@ from ElectricCar.visualize import draw_graph
 
 # initialiazes a run for your heuristic
 def start_run(r: int):
-    random.seed(r)  # Random seed
+    random.seed(1)  # Random seed
     EVRP.init_evals()
     EVRP.init_current_best()
     print("Run: {} with random seed {}".format(r, r))
@@ -45,8 +45,6 @@ if __name__ == "__main__":
     for run in range(1, stats.MAX_TRIALS + 1):
         # Step 3
         start_run(run)
-        # Initialize your heuristic here
-        heuristic.initialize_heuristic()
 
         # Step 4
         while not termination_condition():
@@ -61,6 +59,7 @@ if __name__ == "__main__":
 		be feasisble in terms of energy when check_solution is utilized. 
 		The implementation is only for your reference
 		'''
+        EVRP.check_solution(EVRP.get_current_best_route(), len(EVRP.get_current_best_route()))
 
         # Step 5
         end_run(run)  # store the best solution quality for each run
