@@ -1,5 +1,5 @@
 import math
-import EVRP as EVRP
+import ElectricCar.EVRP as EVRP
 
 MAX_TRIALS = 1
 log_performance = None  # Used to output offline performance and population diversity

@@ -1,4 +1,4 @@
-import EVRP as EVRP
+import ElectricCar.EVRP as EVRP
 import random
 
 '''
@@ -52,7 +52,8 @@ def local_search(solution_route: list):
 		elif method == 4:
 			new_route = or_opt(current_route, len(current_route))
 		else:
-			new_route = AFS_reallocation(current_route, len(current_route))
+			#new_route = AFS_reallocation(current_route, len(current_route))
+			new_route = current_route
 
 
 		if EVRP.fitness_evaluation(new_route, len(new_route)) < EVRP.fitness_evaluation(current_route, len(current_route)):
